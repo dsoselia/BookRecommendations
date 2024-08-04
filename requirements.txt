@@ -1,0 +1,6 @@
+fastapi
+pydantic
+google-api-python-client
+google-generativeai
+typing-extensions
+uvicorn
