@@ -2,6 +2,18 @@
 
 Run using `uvicorn main:app --reload`
 
+## Docker
+``` bash
+docker build . -t bookrecommendation
+```
+Place keys in .env file. Or pass manually using -e parameter
+```bash
+docker run --env-file .env  -p 8000:8000 bookrecommendation
+```bash
+
+This should run the server on port 8000
+
+
 ### API Endpoints
 /get_recommendations - POST
 ```
