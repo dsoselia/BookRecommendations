@@ -20,6 +20,7 @@
     </svg>
   </a> -->
 </div>
+
 <mat-card class="raised-card" appearance="outlined">
   <mat-card-content>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
@@ -55,10 +56,14 @@
       <div class="form-row">
         <div style="display: flex; flex-direction: column;">
           <mat-label>Book Rating</mat-label>
-          <mat-slider min="1" max="5" step="0.1" discrete>
+          <!-- <mat-slider min="1" max="5" step="0.1" discrete>
             <input matSliderThumb formControlName="rating">
-          </mat-slider>
+          </mat-slider> -->
+          <igc-rating value="ratingVal" min="1" max="5" formControlName="rating"></igc-rating>
+
         </div>
+
+
 
         <mat-form-field appearance="fill" class="form-field">
           <mat-label>Book Review</mat-label>
@@ -95,14 +100,39 @@
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows class=" mat-elevation-z8" matSort>
     <ng-container *ngFor="let column of columnsToDisplay; let i = index" [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> {{regColNames[i]}} </th>
-      <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+      <!-- <td mat-cell *matCellDef="let element"> {{element[column]}} </td> -->
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="column === 'imgSrc'; else textCell">
+          <img [src]="element[column]" alt="Book Image" style="max-width: 100px; max-height: 100px;">
+        </ng-container>
+        <ng-template #textCell>
+          {{ element[column] }}
+        </ng-template>
+      </td>
     </ng-container>
+    <!-- OldCode -->
 
-    <ng-container matColumnDef="expandedDetail">
+    <!-- <ng-container matColumnDef="expandedDetail">
       <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
         <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
           <div class="example-element-diagram">
             <img [src]="element.imgSrc" alt="Description of the image" class="example-image" />
+          </div>
+          <div class="example-element-description">
+            {{element.justification}}
+          </div>
+        </div>
+      </td>
+    </ng-container> -->
+
+    <!-- NewCode -->
+
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+        <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+
+          <div style="font-weight: bold;">
+            Justification
           </div>
           <div class="example-element-description">
             {{element.justification}}
@@ -117,7 +147,11 @@
       [class.example-expanded-row]="expandedElement === element"
       (click)="expandedElement = expandedElement === element ? null : element">
     </tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    <ng-container *ngIf="getValue(expandedElement)">
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </ng-container>
+
+
   </table>
 
 

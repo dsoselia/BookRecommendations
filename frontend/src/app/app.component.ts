@@ -21,7 +21,8 @@ export interface Recommendations {
   imgSrc: string;
   justification: string;
 }
-
+// https://www.infragistics.com/products/ignite-ui-angular/angular/components/rating
+// https://www.infragistics.com/products/ignite-ui-web-components/web-components/components/inputs/rating#styling
 const ELEMENT_DATA = [
   [
     ['Brandon Sanderson'],
@@ -126,8 +127,8 @@ export class AppComponent {
     this.dataSource.sort = this.sort;
   }
 
-  columnsToDisplay = ['position', 'bookAuthor', 'bookTitle', 'publishedDate'];
-  regColNames = ['Position', 'Book Author', 'Book Title', 'Published Date'];
+  columnsToDisplay = ['imgSrc', 'bookAuthor', 'bookTitle', 'publishedDate'];
+  regColNames = ['Thumbnail', 'Book Author', 'Book Title', 'Published Date'];
   expandedElement: Recommendations | null = null;
   subs: Subscription | null = null;
   isLoading: boolean = false;
@@ -136,9 +137,13 @@ export class AppComponent {
     this.form = this.fb.group({
       bookTitle: ['', Validators.required],
       bookAuthor: ['', Validators.required],
-      rating: [0],
+      rating: [3],
       review: ['', Validators.required],
     });
+  }
+
+  getValue(e: any) {
+    return e && e.justification && e.justification.length > 0;
   }
 
   onSubmit() {
@@ -158,7 +163,7 @@ export class AppComponent {
                   publishedDate: item[2],
                   imgSrc: item[3],
                   justification:
-                    index % 2 == 0 ? 'This book is awesome!' : 'Ehh!', // Optional field, can be empty or added if available
+                    index % 2 == 0 ? 'This book is awesome!' : '', // Optional field, can be empty or added if available
                 } as Recommendations)
             )
           );
@@ -205,5 +210,9 @@ export class AppComponent {
     if (this.subs) {
       this.subs.unsubscribe();
     }
+  }
+
+  ratingChanged(e: any) {
+    console.log(e);
   }
 }

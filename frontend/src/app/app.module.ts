@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +17,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { IgcFormsModule } from 'igniteui-angular';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -38,9 +39,11 @@ import { HttpClientModule } from '@angular/common/http';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatSortModule,
+    IgcFormsModule,
     HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

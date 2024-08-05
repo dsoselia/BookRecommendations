@@ -77,6 +77,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-detail {
   overflow: hidden;
   display: flex;
+  align-items: baseline;
 }
 
 /* .example-element-diagram {
@@ -173,4 +174,26 @@ tr.mat-mdc-row:hover {
 /* Mat Loader color */
 :host ::ng-deep .mat-mdc-progress-spinner {
   --mdc-circular-progress-active-indicator-color: #1976d2;
+}
+
+igc-rating {
+  --symbol-size: 44px;
+  --symbol-full-color: #FFD700;
+  --symbol-empty-color: hsla(var(--ig-warn-A400), var(--ig-warn-a));
+}
+
+igc-rating[disabled] {
+  --symbol-full-color: hsla(var(--ig-gray-400), var(--ig-gray-a));
+  --symbol-empty-color: hsla(var(--ig-gray-400), var(--ig-gray-a));
+}
+
+igc-rating::part(label) {
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: var(--ig-overline-text-transform);
+  color: hsla(var(--ig-gray-600), var(--ig-gray-a));
+}
+
+igc-rating::part(symbols) {
+  gap: 8px;
 }
