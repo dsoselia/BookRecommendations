@@ -1,0 +1,176 @@
+/* Mat Form Input */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.form-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.form-field {
+  flex: 1;
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  .form-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* Mat Card */
+.raised-card {
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.raised-card:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15), 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Mat Table */
+.example-container {
+  height: 400px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+/* .example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+} */
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+  display: flex;
+  justify-content: center;
+  /* Center the image horizontally */
+  align-items: center;
+  /* Center the image vertically */
+  overflow: hidden;
+  /* Ensure no overflow */
+}
+
+.example-element-diagram img.example-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  /* Ensure the image scales within the container without distorting */
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+
+tr.mat-mdc-row:hover {
+  background-color: #dfe5ec;
+}
+
+
+/* Mat Spinner  */
+.spinner-container {
+  position: fixed;
+  /* Fixed positioning ensures it stays in place */
+  top: 50%;
+  /* Center vertically */
+  left: 50%;
+  /* Center horizontally */
+  transform: translate(-50%, -50%);
+  /* Adjust the position to truly center */
+  z-index: 9999;
+  /* Ensure it appears above other elements */
+  background: rgba(255, 255, 255, 0.8);
+  /* Optional: adds a semi-transparent background */
+  padding: 16px;
+  /* Optional: adds padding around the spinner */
+  border-radius: 8px;
+  /* Optional: rounds the corners of the background */
+}
+
+/* Mat button color */
+:host ::ng-deep .mat-mdc-raised-button.mat-primary {
+  --mdc-protected-button-container-color: #1976d2;
+}
+
+/* Mat Slider color */
+:host ::ng-deep .mat-mdc-slider.mat-primary {
+  --mdc-slider-handle-color: #1976d2;
+  --mdc-slider-focus-handle-color: #1976d2;
+  --mdc-slider-hover-handle-color: #1976d2;
+  --mdc-slider-active-track-color: #1976d2;
+  --mdc-slider-inactive-track-color: #1976d2;
+  --mdc-slider-with-tick-marks-active-container-color: #fff;
+  --mdc-slider-with-tick-marks-inactive-container-color: #1976d2;
+  --mat-mdc-slider-ripple-color: #1976d2;
+  --mat-mdc-slider-hover-ripple-color: rgba(63, 81, 181, 0.05);
+  --mat-mdc-slider-focus-ripple-color: rgba(63, 81, 181, 0.2);
+}
+
+/* Mat Loader color */
+:host ::ng-deep .mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #1976d2;
+}

@@ -8,10 +8,11 @@ docker build . -t bookrecommendation
 ```
 Place keys in .env file. Or pass manually using -e parameter
 ```bash
-docker run --env-file .env  -p 8000:8000 bookrecommendation
+docker run --env-file .env -p 8001:8000 -p 80:4200 bookrecommendation
 ```
 
-This should run the server on port 8000
+This will run server on port 80
+API will be avilable on 8001 on host if needed
 
 
 ### API Endpoints
