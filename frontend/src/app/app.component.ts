@@ -106,7 +106,7 @@ export class AppComponent {
 
   form: FormGroup;
 
-  url: string = '';
+  url: string = 'http://localhost:8000/get_recommendations/';
 
   dataSource: MatTableDataSource<Recommendations>;
   private paginator: MatPaginator;
@@ -151,19 +151,44 @@ export class AppComponent {
       console.log(this.form.getRawValue());
       this.isLoading = true;
 
-      setTimeout(() => {
-        of(ELEMENT_DATA).subscribe((resp) => {
+      // setTimeout(() => {
+      //   of(ELEMENT_DATA).subscribe((resp) => {
+      //     this.dataSource = new MatTableDataSource(
+      //       ELEMENT_DATA.map(
+      //         (item, index) =>
+      //           ({
+      //             position: index + 1, // Assuming position is based on index
+      //             bookAuthor: item[0][0], // Accessing the first element of the nested array
+      //             bookTitle: item[1],
+      //             publishedDate: item[2],
+      //             imgSrc: item[3],
+      //             justification: index % 2 == 0 ? 'This book is awesome!' : '', // Optional field, can be empty or added if available
+      //           } as Recommendations)
+      //       )
+      //     );
+      //     if (this.dataSource) {
+      //       this.dataSource.paginator = this.paginator;
+      //       this.dataSource.sort = this.sort;
+      //     }
+
+      //     console.log(this.dataSource);
+
+      //     this.isLoading = false;
+      //   });
+      // }, 2000);
+
+      this.subs = this.http.post(this.url, this.form.getRawValue()).subscribe(
+        (resp: any) => {
           this.dataSource = new MatTableDataSource(
-            ELEMENT_DATA.map(
-              (item, index) =>
+            resp.map(
+              (item: any, index: any) =>
                 ({
                   position: index + 1, // Assuming position is based on index
                   bookAuthor: item[0][0], // Accessing the first element of the nested array
                   bookTitle: item[1],
                   publishedDate: item[2],
                   imgSrc: item[3],
-                  justification:
-                    index % 2 == 0 ? 'This book is awesome!' : '', // Optional field, can be empty or added if available
+                  justification: index % 2 == 0 ? 'This book is awesome!' : '', // Optional field, can be empty or added if available
                 } as Recommendations)
             )
           );
@@ -175,13 +200,12 @@ export class AppComponent {
           console.log(this.dataSource);
 
           this.isLoading = false;
-        });
-      }, 2000);
-
-      // this.subs = this.http.post(this.url, this.form.getRawValue()).subscribe(
-      //   (resp) => {},
-      //   (error) => {}
-      // );
+        },
+        (error: any) => {
+          alert('Error on Server Side');
+          console.log(error);
+        }
+      );
     }
   }
 
