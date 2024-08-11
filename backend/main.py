@@ -83,15 +83,15 @@ def get_book_info(title):
         "thumbnail": thumbnail,
     }
 
-
+'''
 @app.post("/get_recommendations")
 def get_recommendations(request: RecommendationRequest):
     print(request)
     return "book"
+'''
 
-
-@app.post("/get_recommendations_1")
-def get_recommendations_1(request: RecommendationRequest):
+@app.post("/get_recommendations")
+def get_recommendations(request: RecommendationRequest):
     suggested_books_by_model = query_model(
         request.book_title, request.book_author, request.rating, request.review
     )
