@@ -27,14 +27,14 @@
       <div class="form-row">
         <mat-form-field class="form-field">
           <mat-label>Book Title</mat-label>
-          <input matInput formControlName="bookTitle">
+          <input matInput formControlName="book_title">
           <mat-error *ngIf="form.get('bookTitle')?.touched && !form.get('bookTitle')?.valid">
             Book Title is required.
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill" class="form-field">
           <mat-label>Book Author</mat-label>
-          <input matInput formControlName="bookAuthor">
+          <input matInput formControlName="book_author">
           <mat-error *ngIf="form.get('bookAuthor')?.touched && !form.get('bookAuthor')?.valid">
             Book Author is required.
           </mat-error>

@@ -135,8 +135,8 @@ export class AppComponent {
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.form = this.fb.group({
-      bookTitle: ['', Validators.required],
-      bookAuthor: ['', Validators.required],
+      book_title: ['', Validators.required],
+      book_author: ['', Validators.required],
       rating: [3],
       review: ['', Validators.required],
     });
@@ -151,34 +151,12 @@ export class AppComponent {
       console.log(this.form.getRawValue());
       this.isLoading = true;
 
-      // setTimeout(() => {
-      //   of(ELEMENT_DATA).subscribe((resp) => {
-      //     this.dataSource = new MatTableDataSource(
-      //       ELEMENT_DATA.map(
-      //         (item, index) =>
-      //           ({
-      //             position: index + 1, // Assuming position is based on index
-      //             bookAuthor: item[0][0], // Accessing the first element of the nested array
-      //             bookTitle: item[1],
-      //             publishedDate: item[2],
-      //             imgSrc: item[3],
-      //             justification: index % 2 == 0 ? 'This book is awesome!' : '', // Optional field, can be empty or added if available
-      //           } as Recommendations)
-      //       )
-      //     );
-      //     if (this.dataSource) {
-      //       this.dataSource.paginator = this.paginator;
-      //       this.dataSource.sort = this.sort;
-      //     }
-
-      //     console.log(this.dataSource);
-
-      //     this.isLoading = false;
-      //   });
-      // }, 2000);
+     
 
       this.subs = this.http.post(this.url, this.form.getRawValue()).subscribe(
         (resp: any) => {
+          console.log(resp);
+
           this.dataSource = new MatTableDataSource(
             resp.map(
               (item: any, index: any) =>
@@ -202,8 +180,11 @@ export class AppComponent {
           this.isLoading = false;
         },
         (error: any) => {
-          alert('Error on Server Side');
+          this.isLoading = false;
           console.log(error);
+        },
+        () =>{
+          this.isLoading = false;
         }
       );
     }
