@@ -106,11 +106,21 @@ def get_recommendations(request: RecommendationRequest):
                 f"Could not find book info for {book['book_title']} by {book['book_author']}"
             )
 
-    result = {
-        "queried_book": get_book_info(request.book_title + " " + request.book_author),
-        "suggested_books": suggested_books,
-    }
-    return result
+    # result = {
+    #     "queried_book": get_book_info(request.book_title + " " + request.book_author),
+    #     "suggested_books": suggested_books,
+    # }
+    
+#       [
+#     ['Patrick Rothfuss'],
+#     'The Name of the Wind',
+#     '2007-03-27',
+#     'http://books.google.com/books/content?id=OlmJEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
+#   ],
+    suggested_books_modified = []
+    for suggested_book in suggested_books:
+        suggested_books_modified.append([suggested_book["authors"], suggested_book["title"], suggested_book["published_date"], suggested_book["thumbnail"]])
+    return suggested_books_modified
 
 
 # Run the app using: uvicorn main:app --reload
