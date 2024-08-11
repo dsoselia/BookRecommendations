@@ -106,7 +106,7 @@ export class AppComponent {
 
   form: FormGroup;
 
-  url: string = 'http://localhost:8000/get_recommendations/';
+  url: string = 'http://34.229.179.95:8001/get_recommendations/';
 
   dataSource: MatTableDataSource<Recommendations>;
   private paginator: MatPaginator;

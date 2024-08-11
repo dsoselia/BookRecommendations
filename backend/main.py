@@ -25,7 +25,24 @@ class RecommendationRequest(BaseModel):
     review: str
 
 
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+origins = [
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+#app = FastAPI()
 
 prompt = """This is my review for {book_title} by {book_author}. I rated it {rating}/5 stars. Here is my review: 
 ===
@@ -69,6 +86,12 @@ def get_book_info(title):
 
 @app.post("/get_recommendations")
 def get_recommendations(request: RecommendationRequest):
+    print(request)
+    return "book"
+
+
+@app.post("/get_recommendations_1")
+def get_recommendations_1(request: RecommendationRequest):
     suggested_books_by_model = query_model(
         request.book_title, request.book_author, request.rating, request.review
     )
