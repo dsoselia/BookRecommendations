@@ -8,7 +8,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-import { of, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -21,70 +21,6 @@ export interface Recommendations {
   imgSrc: string;
   justification: string;
 }
-// https://www.infragistics.com/products/ignite-ui-angular/angular/components/rating
-// https://www.infragistics.com/products/ignite-ui-web-components/web-components/components/inputs/rating#styling
-const ELEMENT_DATA = [
-  [
-    ['Brandon Sanderson'],
-    'The Way of Kings',
-    '2014-03-04',
-    'http://books.google.com/books/content?id=QVn-CgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-  ],
-  [
-    ['Brandon Sanderson'],
-    'Mistborn',
-    '2010-04-01',
-    'http://books.google.com/books/content?id=t_ZYYXZq4RgC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-  ],
-  [
-    ['Patrick Rothfuss'],
-    'The Name of the Wind',
-    '2007-03-27',
-    'http://books.google.com/books/content?id=OlmJEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-  ],
-  [
-    ['Robin Hobb', 'Jody Houser'],
-    "Assassin's Apprentice I #1",
-    '2022-12-14',
-    'http://books.google.com/books/content?id=qMmREAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-  ],
-  [
-    ['N. K. Jemisin'],
-    'The Fifth Season',
-    '2015-08-04',
-    'http://books.google.com/books/content?id=J0tIAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-  ],
-  [
-    ['Robert Jordan'],
-    'The Eye of the World',
-    '2000-09-15',
-    'http://books.google.com/books/content?id=1PgKPuFIz1kC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-  ],
-  [
-    ['Brent Weeks'],
-    'The Black Prism',
-    '2010-08-25',
-    'http://books.google.com/books/content?id=1QAHs3JSVnEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-  ],
-  [
-    ['Joe Abercrombie'],
-    'The Blade Itself',
-    '2015-09-08',
-    'http://books.google.com/books/content?id=SlizBgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-  ],
-  [
-    ['V. E. Schwab'],
-    'A Darker Shade of Magic',
-    '2015-02-24',
-    'http://books.google.com/books/content?id=wod-BAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-  ],
-  [
-    ['Tamsyn Muir'],
-    'Gideon the Ninth',
-    '2019-09-10',
-    'http://books.google.com/books/content?id=HHJwDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-  ],
-];
 
 @Component({
   selector: 'app-root',
@@ -123,8 +59,10 @@ export class AppComponent {
   }
 
   setDataSourceAttributes() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   columnsToDisplay = ['imgSrc', 'bookAuthor', 'bookTitle', 'publishedDate'];
@@ -148,15 +86,9 @@ export class AppComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      console.log(this.form.getRawValue());
       this.isLoading = true;
-
-     
-
       this.subs = this.http.post(this.url, this.form.getRawValue()).subscribe(
         (resp: any) => {
-          console.log(resp);
-
           this.dataSource = new MatTableDataSource(
             resp.map(
               (item: any, index: any) =>
@@ -166,7 +98,7 @@ export class AppComponent {
                   bookTitle: item[1],
                   publishedDate: item[2],
                   imgSrc: item[3],
-                  justification: index % 2 == 0 ? 'This book is awesome!' : '', // Optional field, can be empty or added if available
+                  justification: item[4], // Optional field, can be empty or added if available
                 } as Recommendations)
             )
           );
@@ -174,16 +106,12 @@ export class AppComponent {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           }
-
-          console.log(this.dataSource);
-
           this.isLoading = false;
         },
         (error: any) => {
           this.isLoading = false;
-          console.log(error);
         },
-        () =>{
+        () => {
           this.isLoading = false;
         }
       );
@@ -215,9 +143,5 @@ export class AppComponent {
     if (this.subs) {
       this.subs.unsubscribe();
     }
-  }
-
-  ratingChanged(e: any) {
-    console.log(e);
   }
 }
